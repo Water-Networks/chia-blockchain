@@ -395,12 +395,7 @@ class WalletNode:
                 self.config["full_node_peer"]["port"],
             )
             peers = [c.get_peer_info() for c in self.server.get_full_node_connections()]
-            # If full_node_peer is already an address, use it, otherwise
-            # resolve it here.
-            if full_node_peer.is_valid():
-                full_node_resolved = full_node_peer
-            else:
-                full_node_resolved = PeerInfo(socket.gethostbyname(full_node_peer.host), full_node_peer.port)
+            full_node_resolved = PeerInfo(socket.gethostbyname(full_node_peer.host), full_node_peer.port)
             if full_node_peer in peers or full_node_resolved in peers:
                 self.log.info(f"Will not attempt to connect to other nodes, already connected to {full_node_peer}")
                 for connection in self.server.get_full_node_connections():
